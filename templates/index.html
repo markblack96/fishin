@@ -1,0 +1,37 @@
+<script src="{{ url_for('static', filename='p5.min.js') }}"></script>
+<script src="{{ url_for('static', filename='p5.play.js') }}"></script>
+
+<div id="game">
+
+</div>
+
+<script>
+    // var fishSprite;
+    var fish;
+    function setup() {
+        createCanvas(800, 400);
+        fish = new Group();
+        // top down view
+        for (let i = 0; i < 10; i++) {
+            let fishSprite = createSprite(random(width), random(height))
+            fishSprite.draw = function() {
+                // skew based on direction
+                fill(0);
+                push();
+                rotate(radians(this.getDirection()));
+                ellipse(0, 0, 15+(this.getSpeed()), 15-(this.getSpeed()));
+                pop();
+            }
+            fishSprite.maxSpeed = random(3,4);
+            fishSprite.addToGroup(fish);
+        }
+        
+    }
+    function draw() {
+        background(255,255,255);
+        fish.forEach(function(f) {
+            f.attractionPoint(random(0.1, 0.4), mouseX, mouseY); 
+        }); 
+        drawSprites(fish);
+    }
+</script>
