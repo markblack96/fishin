@@ -22,16 +22,20 @@
                 ellipse(0, 0, 15+(this.getSpeed()), 15-(this.getSpeed()));
                 pop();
             }
-            fishSprite.maxSpeed = random(3,4);
+            fishSprite.maxSpeed = random(0.5, 1);
+            fishSprite.attractionPoint(random(0.5, 1), random(0, width), random(0, height));
             fishSprite.addToGroup(fish);
         }
         
     }
     function draw() {
         background(255,255,255);
-        fish.forEach(function(f) {
-            f.attractionPoint(random(0.1, 0.4), mouseX, mouseY); 
-        }); 
+
+        if (millis() % 1000 === 0) {
+            fish.forEach(function(f) {
+                f.attractionPoint(random(0.5, 1), random(0, width), random(0, height)); 
+            });
+        }
         drawSprites(fish);
     }
 </script>
